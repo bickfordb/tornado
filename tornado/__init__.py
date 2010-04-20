@@ -15,3 +15,14 @@
 # under the License.
 
 """The Tornado web server and tools."""
+
+import logging
+
+# Without this NullHandler the logging module will emit messages like
+# 'No handlers could be found for logger "tornado.web"'
+# cf. http://docs.python.org/library/logging.html#configuring-logging-for-a-library
+class NullHandler(logging.Handler):
+    def emit(self, record):
+        pass
+
+logging.getLogger("tornado").addHandler(NullHandler())
